@@ -6,6 +6,7 @@ export default function Home() {
   const [lowercase, setLowerCase] = useState(false);
   const [numbers, setNumbers] = useState(false);
   const [symbol, setSymbol] = useState(false);
+  const [password, setPassword] = useState('')
 
   let characters = "";
   if (uppercase) characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -18,10 +19,17 @@ export default function Home() {
       alert("click on any of the checkbox") 
       return
     }
+  let newPassword = ""
+  for (let i = 0; i < getValue; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    newPassword += characters[randomIndex];
+  }
+   setPassword(newPassword);
+ 
   }
 
 
-  
+
   return (
     <div className="container">
       <div className="content">
@@ -42,7 +50,7 @@ export default function Home() {
                 type="range"
                 min={"6"}
                 max={"20"}
-                value={getValue}
+                value={password}
                 onChange={(e) => setGetValue(Number(e.target.value))}
                 readOnly
               />
@@ -82,7 +90,7 @@ export default function Home() {
           </div>
 
           <div>
-            <button className="butt">Generate Password</button>
+            <button className="butt" onClick={handleSubmit}>Generate Password</button>
           </div>
         </div>
         <div className="password-strength">
