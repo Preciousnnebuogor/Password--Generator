@@ -170,5 +170,22 @@ body {background: linear-gradient(
     min-height: 5%;
     background-color: var(--weak-color);
     transition: width 0.3s ease;
-
 }
+/* .color-password {
+  height: 10px;
+  width: 100px;
+  border-radius: 5px;
+} */
+
+.color-password.weak {
+  background-color: var(--weak-color);
+}
+
+.color-password.medium {
+  background-color: var(--medium-color);
+}
+
+.color-password.strong {
+  background-color: var(--strong-color);
+}
+

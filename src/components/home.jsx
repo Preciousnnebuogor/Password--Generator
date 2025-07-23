@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { FaRegCopy } from "react-icons/fa6";
 export default function Home() {
   const [getValue, setGetValue] = useState(12);
@@ -7,6 +7,7 @@ export default function Home() {
   const [numbers, setNumbers] = useState(false);
   const [symbol, setSymbol] = useState(false);
   const [password, setPassword] = useState('')
+  const [strength, setStrength] = useState("Weak");
 
   let characters = "";
   if (uppercase) characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -28,16 +29,31 @@ export default function Home() {
  
   }
 
-function passwordStrength(){
-  let strengthScore = 0
-  const passwordLength = password.length
-  strengthScore =+ Maths.min(passwordLength *2 , 40)
-  if(uppercase) strengthScore += 15
-  if (lowercase) strengthScore += 15;
-  if (numbers) strengthScore += 15;
-  if (symbol) strengthScore += 15;
+function calculateStrength() {
+  let score = 0;
+  const length = password.length;
 
+  score += Math.min(length * 2, 40);
+  if (uppercase) score += 15;
+  if (lowercase) score += 15;
+  if (numbers) score += 15;
+  if (symbol) score += 15;
+
+  if (score < 50) {
+    setStrength("Weak");
+  } else if (score < 80) {
+    setStrength("Medium");
+  } else {
+    setStrength("Strong");
+  }
 }
+
+// Run strength calculation whenever password or checkbox options change
+useEffect(() => {
+  calculateStrength();
+}, [password, uppercase, lowercase, numbers, symbol]);
+
+
 
   return (
     <div className="container">
@@ -99,17 +115,19 @@ function passwordStrength(){
           </div>
 
           <div>
-            <button className="butt" onClick={handleSubmit}>Generate Password</button>
+            <button className="butt" onClick={handleSubmit}>
+              Generate Password
+            </button>
           </div>
         </div>
         <div className="password-strength">
           <div className="password">
             <p>Password Strength</p>
-            <span>Low</span>
+            <span>{strength}</span>
           </div>
 
           <div className="color">
-            <div className="color-password"></div>
+            <div className={`color-password ${strength.toLowerCase()}`}></div>
           </div>
         </div>
       </div>
