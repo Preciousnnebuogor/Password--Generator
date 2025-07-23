@@ -28,7 +28,16 @@ export default function Home() {
  
   }
 
+function passwordStrength(){
+  let strengthScore = 0
+  const passwordLength = password.length
+  strengthScore =+ Maths.min(passwordLength *2 , 40)
+  if(uppercase) strengthScore += 15
+  if (lowercase) strengthScore += 15;
+  if (numbers) strengthScore += 15;
+  if (symbol) strengthScore += 15;
 
+}
 
   return (
     <div className="container">
@@ -36,7 +45,7 @@ export default function Home() {
         <div className="section1">
           <p className="param1">Password Generator</p>
           <div className="inputfield">
-            <input readOnly />
+            <input readOnly value={password} />
             <i>
               <FaRegCopy />
             </i>
@@ -50,7 +59,7 @@ export default function Home() {
                 type="range"
                 min={"6"}
                 max={"20"}
-                value={password}
+                value={getValue}
                 onChange={(e) => setGetValue(Number(e.target.value))}
                 readOnly
               />
